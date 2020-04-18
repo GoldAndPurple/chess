@@ -2,6 +2,6 @@ language: c
 compiler: gcc
 
 script:
-  make
-  cd bin
-  ./chess match
+- make
+- cd bin
+- ./chess match
