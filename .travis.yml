@@ -1,2 +1,7 @@
 language: c
 compiler: gcc
+
+script:
+  make
+  cd bin
+  ./chess match
