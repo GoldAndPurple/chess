@@ -2,7 +2,7 @@ OUT = bin/chess
 TEST = tester
 CC = gcc
 CFLAGS = -Wall -Werror -c
-TESTFLAGS = -Wall -I thirdparty src -c
+TESTFLAGS = -Wall -Isrc -Ithirdparty -c
 ODIR = build
 SDIR = src
 TDIR = test
@@ -24,8 +24,9 @@ clean:
 		rm -f $(ODIR)/*.o $(OUT) $(TEST)
 
 #testing
+
 $(ODIR)/%.o: $(TDIR)/%.c
 		$(CC) $(TESTFLAGS) -o $@ $^
 
-$(TEST): $(ODIR)/test_main.o $(ODIR)/test_board.o thirdparty/ctest.h
+$(TEST): $(ODIR)/test_main.o $(ODIR)/test_board.o $(SDIR)/board.h
 		$(CC) -o $(TEST) $^

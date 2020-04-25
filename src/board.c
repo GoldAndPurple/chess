@@ -12,59 +12,47 @@ char board[8][8] = {{'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
 
 void errorcheck(int currentturn) {
     printf("\nError found at line %d; reason:\n", currentturn);
-    switch (errReason){
-        case 0:
-            puts("Undefined error");
-            break;
-        case 1:
-            puts("Incorrect move: cannot stay in the same place");
-            break;
-        case 2:
-            puts("Incorrect move: knight");
-            break;
-        case 3:
-            puts("Incorrect move: king");
-            break;
-        case 4:
-            puts("Incorrect move: bishop");
-            break;
-        case 5:
-            puts("Incorrect move: rook");
-            break;
-        case 6:
-            puts("Incorrect move: pawn");
-            break;
-        case 7:
-            puts("Incorrect move: queen");
-            break;
-        case 8:
-            puts("Incorrect attack/move notation");
-            break;
-        case 9:
-            puts("Incorrect turn notation");
-            break;
-        case 10:
-            puts("Out of bounds");
-            break;
-        case 11:
-            puts("Incorrect piece notation");
-            break;
-        case 12:
-            puts("Incorrect symbol post-move");
-            break;
+    switch (errReason) {
+    case 0:
+        puts("Undefined error");
+        break;
+    case 1:
+        puts("Incorrect move: cannot stay in the same place");
+        break;
+    case 2:
+        puts("Incorrect move: knight");
+        break;
+    case 3:
+        puts("Incorrect move: king");
+        break;
+    case 4:
+        puts("Incorrect move: bishop");
+        break;
+    case 5:
+        puts("Incorrect move: rook");
+        break;
+    case 6:
+        puts("Incorrect move: pawn");
+        break;
+    case 7:
+        puts("Incorrect move: queen");
+        break;
+    case 8:
+        puts("Incorrect attack/move notation");
+        break;
+    case 9:
+        puts("Incorrect turn notation");
+        break;
+    case 10:
+        puts("Out of bounds");
+        break;
+    case 11:
+        puts("Incorrect piece notation");
+        break;
+    case 12:
+        puts("Incorrect symbol post-move");
+        break;
     }
-}
-
-void printState(char a[8][8]) {
-    int i = 0, j = 0;
-    for (i = 7; i >= 0; i--) {
-        printf("%d ", i + 1);
-        for (j = 0; j < 8; j++) {
-            printf("%c ", a[i][j]);
-        }
-        printf("\n");
-    }
-    printf("  A B C D E F G H\n\n");
 }
 
 int knight(int x, int y, int x1, int y1) {
@@ -97,7 +85,7 @@ int bishop(int x, int y, int x1, int y1) {
         // right-up
         for (i = 1; i < abs(x1 - x); i++) {
             if (board[x + i][y + i] != ' ') {
-            errReason = 4;
+                errReason = 4;
                 return 0;
             }
         }
@@ -137,7 +125,7 @@ int rook(int x, int y, int x1, int y1) {
     int i;
 
     if (x1 != x && y1 != y) {
-                errReason = 5;
+        errReason = 5;
         return 0;
     }
 
@@ -183,33 +171,33 @@ int rook(int x, int y, int x1, int y1) {
 
 int queen(int x, int y, int x1, int y1) {
     if (x == x1 || y == y1) {
-        if (rook(x, y, x1, y1) == 1){
+        if (rook(x, y, x1, y1) == 1) {
             return 1;
         }
     } else if (abs(x1 - x) == abs(y1 - y)) {
-        if (bishop(x, y, x1, y1) == 1){
+        if (bishop(x, y, x1, y1) == 1) {
             return 1;
         }
     }
-        errReason = 7;
-        return 0;
+    errReason = 7;
+    return 0;
 }
 
 int pawn(int x, int y, int x1, int y1) {
-
     int direction;
-    if (board[x][y]>='A' && board[x][y]<='Z'){
+    if (board[x][y] >= 'A' && board[x][y] <= 'Z') {
         direction = 1;
     } else {
         direction = -1;
     }
 
     // first move
-        if ((x == 1 && x1 == 3 && direction == 1) || (x == 6 && x1 == 4 && direction == -1)) {
-            if (y1 - y == 0) {
-                return 1;
-            }
+    if ((x == 1 && x1 == 3 && direction == 1)
+        || (x == 6 && x1 == 4 && direction == -1)) {
+        if (y1 - y == 0) {
+            return 1;
         }
+    }
 
     // slay
     if (board[x1][y1] != ' ') {
@@ -223,7 +211,7 @@ int pawn(int x, int y, int x1, int y1) {
             return 1;
         }
     }
-                errReason = 6;
+    errReason = 6;
     return 0;
 }
 
@@ -244,7 +232,7 @@ int slaycheck(char type, int x2, int y2, char fig, char color) {
         }
     }
 
-                errReason = 8;
+    errReason = 8;
     return 0;
 }
 
@@ -293,13 +281,13 @@ int movecheck(char x1, char y1, char x2, char y2, char slay, char fig) {
     // board limits
     if ((ix1 < 0) || (ix2 < 0) || (iy1 < 0) || (iy2 < 0) || (ix1 > 7)
         || (ix2 > 7) || (iy1 > 7) || (iy2 > 7)) {
-                errReason = 10;
+        errReason = 10;
         return 0;
     }
 
     // different position
     if (ix1 == ix2 && iy1 == iy2) {
-                errReason = 1;
+        errReason = 1;
         return 0;
     }
 
@@ -331,7 +319,7 @@ int turnread(char* line, int currentturn) {
     turnnum = atoi(strtok(line, "."));
 
     if (turnnum != currentturn) {
-                errReason = 9;
+        errReason = 9;
         return 0;
     }
 
@@ -373,7 +361,7 @@ int turnread(char* line, int currentturn) {
         castling();
         break;
     default:
-                errReason = 11;
+        errReason = 11;
         return 0;
     }
 
@@ -400,7 +388,7 @@ int turnread(char* line, int currentturn) {
         return 2;
         break;
     default:
-                errReason = 12;
+        errReason = 12;
         return 0;
     }
     // black turn
@@ -441,7 +429,7 @@ int turnread(char* line, int currentturn) {
         castling();
         break;
     default:
-                errReason = 11;
+        errReason = 11;
         return 0;
     }
 
@@ -468,7 +456,7 @@ int turnread(char* line, int currentturn) {
         return 2;
         break;
     default:
-                errReason = 12;
+        errReason = 12;
         return 0;
     }
     return 1;

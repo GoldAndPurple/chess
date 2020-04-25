@@ -3,5 +3,6 @@ compiler: gcc
 
 script:
 - make
+- ./tester
 - cd bin
 - ./chess match
