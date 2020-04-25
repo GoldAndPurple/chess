@@ -1,26 +1,31 @@
 OUT = bin/chess
+TEST = tester
 CC = gcc
 CFLAGS = -Wall -Werror -c
+TESTFLAGS = -Wall -I thirdparty src -c
 ODIR = build
 SDIR = src
-
-OBJS = $(ODIR)/board_print_terminal.o $(ODIR)/board.o $(ODIR)/main.o
-
-all: $(OUT)
-
-$(ODIR)/board_print_terminal.o: $(SDIR)/board_print_terminal.c
-		$(CC) $(CFLAGS) -o $@ $^
-
-$(ODIR)/board.o: $(SDIR)/board.c
-		$(CC) $(CFLAGS) -o $@ $^
-
-$(ODIR)/main.o: $(SDIR)/main.c
-		$(CC) $(CFLAGS) -o $@ $^
-
-$(OUT): $(OBJS) 
-		$(CC) -g1 -o $(OUT) $^
+TDIR = test
 
 .PHONY: all clean
 
+OBJS = $(ODIR)/board_print_terminal.o $(ODIR)/board.o $(ODIR)/main.o
+
+all: $(OUT) $(TEST)
+re: clean all
+
+$(ODIR)/%.o: $(SDIR)/%.c
+		$(CC) $(CFLAGS) -o $@ $^
+
+$(OUT): $(OBJS)
+		$(CC) -o $(OUT) $^
+
 clean:
-		rm -f $(ODIR)/*.o $(OUT)
+		rm -f $(ODIR)/*.o $(OUT) $(TEST)
+
+#testing
+$(ODIR)/%.o: $(TDIR)/%.c
+		$(CC) $(TESTFLAGS) -o $@ $^
+
+$(TEST): $(ODIR)/test_main.o $(ODIR)/test_board.o thirdparty/ctest.h
+		$(CC) -o $(TEST) $^
