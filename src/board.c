@@ -444,6 +444,9 @@ int turnread(char* line, int currentturn) {
         return 0;
     }
 
+    if (line[index + 5] == '\r'){
+        index++;
+    }
     switch (line[index + 5]) {
     case ' ':
     case '\0':
