@@ -1,8 +1,9 @@
 language: c
 compiler: gcc
+dist: xenial
 
 script:
 - make
 - ./tester
-- cd bin
-- ./chess match
+- ./bin/chess match
+- git ls-files src/ | xargs clang-format -i && git diff --exit-code
