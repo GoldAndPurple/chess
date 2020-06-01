@@ -13,8 +13,7 @@ char board[8][8] = {{'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
 void errorcheck(int currentturn)
 {
     printf("\nError found at line %d; reason:\n", currentturn);
-    switch (errReason)
-    {
+    switch (errReason) {
     case 0:
         puts("Undefined error");
         break;
@@ -59,8 +58,10 @@ void errorcheck(int currentturn)
 
 int knight(int x, int y, int x1, int y1)
 {
-    if ((y1 == y + 2 && x1 == x + 1) || (y1 == y + 2 && x1 == x - 1) || (y1 == y + 1 && x1 == x + 2) || (y1 == y + 1 && x1 == x - 2) || (y1 == y - 1 && x1 == x + 2) || (y1 == y - 1 && x1 == x - 2) || (y1 == y - 2 && x1 == x + 1) || (y1 == y - 2 && x1 == x - 1))
-    {
+    if ((y1 == y + 2 && x1 == x + 1) || (y1 == y + 2 && x1 == x - 1)
+        || (y1 == y + 1 && x1 == x + 2) || (y1 == y + 1 && x1 == x - 2)
+        || (y1 == y - 1 && x1 == x + 2) || (y1 == y - 1 && x1 == x - 2)
+        || (y1 == y - 2 && x1 == x + 1) || (y1 == y - 2 && x1 == x - 1)) {
         return 1;
     }
     errReason = 2;
@@ -69,8 +70,7 @@ int knight(int x, int y, int x1, int y1)
 
 int king(int x, int y, int x1, int y1)
 {
-    if ((abs(x1 - x) <= 1) && (abs(y1 - y) <= 1))
-    {
+    if ((abs(x1 - x) <= 1) && (abs(y1 - y) <= 1)) {
         return 1;
     }
     errReason = 3;
@@ -80,55 +80,39 @@ int king(int x, int y, int x1, int y1)
 int bishop(int x, int y, int x1, int y1)
 {
     int i;
-    if (abs(y1 - y) != abs(x1 - x))
-    {
+    if (abs(y1 - y) != abs(x1 - x)) {
         errReason = 4;
         return 0;
     }
 
-    if (x1 > x && y1 > y)
-    {
+    if (x1 > x && y1 > y) {
         // right-up
-        for (i = 1; i < abs(x1 - x); i++)
-        {
-            if (board[x + i][y + i] != ' ')
-            {
+        for (i = 1; i < abs(x1 - x); i++) {
+            if (board[x + i][y + i] != ' ') {
                 errReason = 4;
                 return 0;
             }
         }
-    }
-    else if (x1 < x && y1 < y)
-    {
+    } else if (x1 < x && y1 < y) {
         // left-down
-        for (i = 1; i < abs(x1 - x); i++)
-        {
-            if (board[x - i][y - i] != ' ')
-            {
+        for (i = 1; i < abs(x1 - x); i++) {
+            if (board[x - i][y - i] != ' ') {
                 errReason = 4;
                 return 0;
             }
         }
-    }
-    else if (x1 > x && y1 < y)
-    {
+    } else if (x1 > x && y1 < y) {
         // right-down
-        for (i = 1; i < abs(x1 - x); i++)
-        {
-            if (board[x + i][y - i] != ' ')
-            {
+        for (i = 1; i < abs(x1 - x); i++) {
+            if (board[x + i][y - i] != ' ') {
                 errReason = 4;
                 return 0;
             }
         }
-    }
-    else if (x1 < x && y1 > y)
-    {
+    } else if (x1 < x && y1 > y) {
         // left-up
-        for (i = 1; i < abs(x1 - x); i++)
-        {
-            if (board[x - i][y + i] != ' ')
-            {
+        for (i = 1; i < abs(x1 - x); i++) {
+            if (board[x - i][y + i] != ' ') {
                 errReason = 4;
                 return 0;
             }
@@ -142,55 +126,39 @@ int rook(int x, int y, int x1, int y1)
 {
     int i;
 
-    if (x1 != x && y1 != y)
-    {
+    if (x1 != x && y1 != y) {
         errReason = 5;
         return 0;
     }
 
-    if (x1 > x)
-    {
+    if (x1 > x) {
         // left
-        for (i = 1; (x - i) > x1; i++)
-        {
-            if (board[x - i][y] != ' ')
-            {
+        for (i = 1; (x - i) > x1; i++) {
+            if (board[x - i][y] != ' ') {
                 errReason = 5;
                 return 0;
             }
         }
-    }
-    else if (x1 < x)
-    {
+    } else if (x1 < x) {
         // right
-        for (i = 1; (x + i) < x1; i++)
-        {
-            if (board[x + i][y] != ' ')
-            {
+        for (i = 1; (x + i) < x1; i++) {
+            if (board[x + i][y] != ' ') {
                 errReason = 5;
                 return 0;
             }
         }
-    }
-    else if (y1 > y)
-    {
+    } else if (y1 > y) {
         // up
-        for (i = 1; (y + i) < y1; i++)
-        {
-            if (board[x][y + i] != ' ')
-            {
+        for (i = 1; (y + i) < y1; i++) {
+            if (board[x][y + i] != ' ') {
                 errReason = 5;
                 return 0;
             }
         }
-    }
-    else if (y1 < y)
-    {
+    } else if (y1 < y) {
         // down
-        for (i = 1; (y - i) > y1; i++)
-        {
-            if (board[x][y - i] != ' ')
-            {
+        for (i = 1; (y - i) > y1; i++) {
+            if (board[x][y - i] != ' ') {
                 errReason = 5;
                 return 0;
             }
@@ -202,17 +170,12 @@ int rook(int x, int y, int x1, int y1)
 
 int queen(int x, int y, int x1, int y1)
 {
-    if (x == x1 || y == y1)
-    {
-        if (rook(x, y, x1, y1) == 1)
-        {
+    if (x == x1 || y == y1) {
+        if (rook(x, y, x1, y1) == 1) {
             return 1;
         }
-    }
-    else if (abs(x1 - x) == abs(y1 - y))
-    {
-        if (bishop(x, y, x1, y1) == 1)
-        {
+    } else if (abs(x1 - x) == abs(y1 - y)) {
+        if (bishop(x, y, x1, y1) == 1) {
             return 1;
         }
     }
@@ -223,37 +186,29 @@ int queen(int x, int y, int x1, int y1)
 int pawn(int x, int y, int x1, int y1)
 {
     int direction;
-    if (board[x][y] >= 'A' && board[x][y] <= 'Z')
-    {
+    if (board[x][y] >= 'A' && board[x][y] <= 'Z') {
         direction = 1;
-    }
-    else
-    {
+    } else {
         direction = -1;
     }
 
     // first move
-    if ((x == 1 && x1 == 3 && direction == 1) || (x == 6 && x1 == 4 && direction == -1))
-    {
-        if (y1 - y == 0)
-        {
+    if ((x == 1 && x1 == 3 && direction == 1)
+        || (x == 6 && x1 == 4 && direction == -1)) {
+        if (y1 - y == 0) {
             return 1;
         }
     }
 
     // slay
-    if (board[x1][y1] != ' ')
-    {
-        if ((abs(y1 - y) == 1) && (x1 - x == direction))
-        {
+    if (board[x1][y1] != ' ') {
+        if ((abs(y1 - y) == 1) && (x1 - x == direction)) {
             return 1;
         }
     }
     // regular
-    if (board[x1][y1] == ' ')
-    {
-        if ((y - y1 == 0) && (x1 - x == direction))
-        {
+    if (board[x1][y1] == ' ') {
+        if ((y - y1 == 0) && (x1 - x == direction)) {
             return 1;
         }
     }
@@ -263,26 +218,17 @@ int pawn(int x, int y, int x1, int y1)
 
 int slaycheck(char type, int x2, int y2, char fig, char color)
 {
-    if (type == '-')
-    {
-        if (board[x2][y2] == ' ')
-        {
+    if (type == '-') {
+        if (board[x2][y2] == ' ') {
             return 1;
         }
-    }
-    else if (type == 'x')
-    {
-        if (color == 'w')
-        {
-            if (board[x2][y2] >= 'a' && board[x2][y2] <= 'z')
-            {
+    } else if (type == 'x') {
+        if (color == 'w') {
+            if (board[x2][y2] >= 'a' && board[x2][y2] <= 'z') {
                 return 1;
             }
-        }
-        else if (color == 'b')
-        {
-            if (board[x2][y2] >= 'A' && board[x2][y2] <= 'Z')
-            {
+        } else if (color == 'b') {
+            if (board[x2][y2] >= 'A' && board[x2][y2] <= 'Z') {
                 return 1;
             }
         }
@@ -294,8 +240,7 @@ int slaycheck(char type, int x2, int y2, char fig, char color)
 
 int figurecheck(char fig, int x1, int y1, int x2, int y2)
 {
-    switch (fig)
-    {
+    switch (fig) {
     case 'P':
     case 'p':
         return pawn(x1, y1, x2, y2);
@@ -339,41 +284,33 @@ int movecheck(char x1, char y1, char x2, char y2, char slay, char fig)
     iy2 = (int)x2 - 97;
 
     // board limits
-    if ((ix1 < 0) || (ix2 < 0) || (iy1 < 0) || (iy2 < 0) || (ix1 > 7) || (ix2 > 7) || (iy1 > 7) || (iy2 > 7))
-    {
+    if ((ix1 < 0) || (ix2 < 0) || (iy1 < 0) || (iy2 < 0) || (ix1 > 7)
+        || (ix2 > 7) || (iy1 > 7) || (iy2 > 7)) {
         errReason = 10;
         return 0;
     }
 
     // different position
-    if (ix1 == ix2 && iy1 == iy2)
-    {
+    if (ix1 == ix2 && iy1 == iy2) {
         errReason = 1;
         return 0;
     }
 
-    if (fig >= 'A' && fig <= 'Z')
-    {
+    if (fig >= 'A' && fig <= 'Z') {
         color = 'w';
-    }
-    else
-    {
+    } else {
         color = 'b';
     }
 
-    if ((board[ix1][iy1] == fig) && (figurecheck(fig, ix1, iy1, ix2, iy2)) && (slaycheck(slay, ix2, iy2, fig, color)))
-    {
+    if ((board[ix1][iy1] == fig) && (figurecheck(fig, ix1, iy1, ix2, iy2))
+        && (slaycheck(slay, ix2, iy2, fig, color))) {
         board[ix1][iy1] = ' ';
-        if (fig == 'p' && x2 == 0)
-        {
+        if (fig == 'p' && x2 == 0) {
             board[ix2][iy2] = 'q';
         }
-        if (fig == 'P' && x2 == 7)
-        {
+        if (fig == 'P' && x2 == 7) {
             board[ix2][iy2] = 'Q';
-        }
-        else
-        {
+        } else {
             board[ix2][iy2] = fig;
         }
         return 1;
@@ -381,14 +318,13 @@ int movecheck(char x1, char y1, char x2, char y2, char slay, char fig)
     return 0;
 }
 
-int turnread(char *line, int currentturn)
+int turnread(char* line, int currentturn)
 {
     char fig;
     int turnnum;
     turnnum = atoi(strtok(line, "."));
 
-    if (turnnum != currentturn)
-    {
+    if (turnnum != currentturn) {
         errReason = 9;
         return 0;
     }
@@ -396,8 +332,7 @@ int turnread(char *line, int currentturn)
     int index = 3 + (turnnum / 10);
 
     // white turn
-    switch (line[index])
-    {
+    switch (line[index]) {
     case 'K':
         fig = 'K';
         index++;
@@ -437,18 +372,17 @@ int turnread(char *line, int currentturn)
     }
 
     if (movecheck(
-            line[index],
-            line[index + 1],
-            line[index + 3],
-            line[index + 4],
-            line[index + 2],
-            fig) == 0)
-    {
+                line[index],
+                line[index + 1],
+                line[index + 3],
+                line[index + 4],
+                line[index + 2],
+                fig)
+        == 0) {
         return 0;
     }
 
-    switch (line[index + 5])
-    {
+    switch (line[index + 5]) {
     case ' ':
     case '\0':
     case '\n':
@@ -466,8 +400,7 @@ int turnread(char *line, int currentturn)
     // black turn
     index += 6;
 
-    switch (line[index])
-    {
+    switch (line[index]) {
     case 'K':
         fig = 'k';
         index++;
@@ -507,22 +440,20 @@ int turnread(char *line, int currentturn)
     }
 
     if (movecheck(
-            line[index],
-            line[index + 1],
-            line[index + 3],
-            line[index + 4],
-            line[index + 2],
-            fig) == 0)
-    {
+                line[index],
+                line[index + 1],
+                line[index + 3],
+                line[index + 4],
+                line[index + 2],
+                fig)
+        == 0) {
         return 0;
     }
 
-    if (line[index + 5] == '\r')
-    {
+    if (line[index + 5] == '\r') {
         index++;
     }
-    switch (line[index + 5])
-    {
+    switch (line[index + 5]) {
     case ' ':
     case '\0':
     case '\n':

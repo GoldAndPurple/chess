@@ -21,6 +21,6 @@ int slaycheck(char type, int x2, int y2, char fig, char color);
 int figurecheck(char fig, int x1, int y1, int x2, int y2);
 int movecheck(char x1, char y1, char x2, char y2, char slay, char fig);
 
-int turnread(char *line, int currentturn);
+int turnread(char* line, int currentturn);
 
 #endif // BOARD_H
